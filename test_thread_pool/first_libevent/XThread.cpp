@@ -22,7 +22,7 @@ void XThread::Notify(evutil_socket_t fd, short which)
 #ifdef _WIN32
 	int recLen = recv(fd, buf, 1, 0);
 #else
-	int recLen = read(fd, buf, 1, 0);
+	int recLen = read(fd, buf, 1);
 #endif
 	if (recLen <= 0)
 		return;
@@ -104,7 +104,8 @@ void XThread::Activate()
 #ifdef _WIN32
 	int res = send(this->notify_send_fd, "c", 1, 0);
 #else
-	int res = write(this->notify_send_fd, "c", 1, 0);
+	int res = write(this->notify_send_fd, "c", 1);
+
 #endif
 	if (res <= 0)
 	{
